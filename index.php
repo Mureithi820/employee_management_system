@@ -6,10 +6,20 @@ if (session_status() === PHP_SESSION_NONE) {
 // Check if user is logged in
 if (isset($_SESSION['user_id'])) {
     // Determine which page to load based on URL parameter
-    $page = $_GET['page'] ?? 'dashboard'; // Default to dashboard
+    $page = $_GET['page'] ?? 'dashboard';
+    $id = $_GET['id'] ?? null;
     switch ($page) {
         case 'dashboard':
             $content = ($_SESSION['role'] === 'admin') ? 'views/admin/dashboard_content.php' : 'views/employee/dashboard_content.php';
+            break;
+        case 'employee_management_create':
+            $content = 'views/admin/employee_management/create.php';
+            break;
+        case 'employee_management_update':
+            $content = 'views/admin/employee_management/update.php'; 
+            break;
+        case 'employee_management_delete':
+            include 'views/admin/employee_management/delete.php';
             break;
         case 'admin_time_tracking':
             $content = 'views/admin/time_tracking/index.php';
