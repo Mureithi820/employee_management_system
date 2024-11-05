@@ -27,6 +27,9 @@ if (isset($_SESSION['user_id'])) {
         case 'admin_payroll':
             $content = 'views/admin/payroll/index.php';
             break;
+        case 'payroll_create':
+            $content = 'views/admin/payroll/create.php';
+            break;
         case 'admin_leave_management':
             $content = 'views/admin/leave_management/index.php';
             break;
