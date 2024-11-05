@@ -33,6 +33,27 @@ if (isset($_SESSION['user_id'])) {
         case 'admin_leave_management':
             $content = 'views/admin/leave_management/index.php';
             break;
+        case 'admin_leave_type':
+            $content = 'views/admin/leave_management/add_leave_type.php';
+            break;
+        case 'approve_leave_request':
+            include 'views/admin/leave_management/approve.php'; 
+            break;
+        case 'reject_leave_request':
+            include 'views/admin/leave_management/reject.php'; 
+            break;
+        case 'view_leave_requests':
+            $content = 'views/admin/leave_management/view_leave_requests.php';
+            break;
+        case 'leave_management_edit':
+            $content = 'views/admin/leave_management/edit_leave_type.php'; 
+            break;
+        case 'leave_management_delete':
+            include 'views/admin/leave_management/delete_leave_type.php';
+            break;
+        case 'leave_request_management_delete':
+            include 'views/admin/leave_management/delete_leave_request.php';
+            break;
         case 'employee_management':
             $content = 'views/admin/employee_management/index.php';
             break;
@@ -47,6 +68,9 @@ if (isset($_SESSION['user_id'])) {
             break;
         case 'leave_management':
             $content = 'views/employee/leave_management/index.php';
+            break;
+        case 'request_leave':
+            $content = 'views/employee/leave_management/request_leave.php';
             break;
         case 'profile': 
             $content = ($_SESSION['role'] === 'admin') ? 'views/admin/profile.php' : 'views/employee/profile.php';
