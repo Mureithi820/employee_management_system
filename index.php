@@ -60,6 +60,12 @@ if (isset($_SESSION['user_id'])) {
         case 'user_management':
             $content = 'views/admin/user_management/index.php';
             break;
+        case 'user_management_update':
+            $content = 'views/admin/user_management/update.php'; 
+            break;
+        case 'user_management_delete':
+            include 'views/admin/user_management/delete.php';
+            break;
         case 'time_tracking':
             $content = 'views/employee/time_tracking/index.php';
             break;

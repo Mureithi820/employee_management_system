@@ -31,12 +31,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $startDate = $_POST['start_date'];
     $endDate = $_POST['end_date'];
 
-    // Insert leave request
-    $stmt = $pdo->prepare("INSERT INTO leave_requests (user_id, leave_type_id, start_date, end_date) VALUES (?, ?, ?, ?)");
-    $stmt->execute([$employee['id'], $leaveTypeId, $startDate, $endDate]);
+    // Calculate requested leave days
+    $start = new DateTime($startDate);
+    $end = new DateTime($endDate);
+    $requestedDays = $start->diff($end)->days + 1; // Include the start day
 
-    header("Location: index.php?page=leave_requests");
-    exit;
+    // Fetch used days for the leave type from employee_leave_balances
+    $stmt = $pdo->prepare("SELECT used_days FROM employee_leave_balances WHERE user_id = ? AND leave_type_id = ?");
+    $stmt->execute([$employee['id'], $leaveTypeId]);
+    $balanceData = $stmt->fetch(PDO::FETCH_ASSOC);
+    $usedDays = $balanceData['used_days'] ?: 0;
+
+    // Get entitled days for the selected leave type
+    $stmt = $pdo->prepare("SELECT entitled_days FROM leave_types WHERE id = ?");
+    $stmt->execute([$leaveTypeId]);
+    $entitledDaysData = $stmt->fetch(PDO::FETCH_ASSOC);
+    $entitledDays = $entitledDaysData['entitled_days'] ?: 0;
+
+    // Calculate remaining days
+    $remainingDays = $entitledDays - $usedDays;
+
+    if ($requestedDays > $remainingDays) {
+        echo "<script>alert('You do not have enough remaining days for this leave type.');</script>";
+    } else {
+        // Insert leave request
+        $stmt = $pdo->prepare("INSERT INTO leave_requests (user_id, leave_type_id, start_date, end_date, status, used_days) VALUES (?, ?, ?, ?, 'pending', ?)");
+        $stmt->execute([$employee['id'], $leaveTypeId, $startDate, $endDate, $requestedDays]);
+
+        header("Location: index.php?page=leave_requests");
+        exit;
+    }
 }
 ?>
 
