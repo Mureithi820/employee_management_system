@@ -61,6 +61,8 @@ foreach ($leave_requests as $request) {
 <div class="container">
     <h1>Your Leave Requests</h1>
     <a href="request_leave.php?page=request_leave" class="btn btn-secondary mb-3">Request Leave</a>
+    <button class="btn btn-danger mb-3" id="download-leave-records">Download Leave Requests as PDF</button>
+    
     <table id="leaveTable" class="table table-striped">
         <thead>
             <tr>
@@ -101,3 +103,36 @@ foreach ($leave_requests as $request) {
         </tbody>
     </table>
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+<script>
+function downloadLeaveRecordsPDF() {
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+
+    pdf.setFontSize(16);
+    pdf.text('Leave Request Records', 10, 10);
+
+    const columns = ["Leave Type", "Start Date", "End Date", "Status", "Used Days", "Remaining Days", "Created At"];
+    const rows = [];
+
+    // Get the table data
+    const table = document.getElementById('leaveTable');
+    for (let i = 1; i < table.rows.length; i++) { // Skip header row
+        const row = table.rows[i];
+        const rowData = Array.from(row.cells).map(cell => cell.textContent);
+        rows.push(rowData);
+    }
+
+    pdf.autoTable({
+        head: [columns],
+        body: rows,
+    });
+
+    pdf.save('leave_requests.pdf');
+}
+
+// Event listener
+document.getElementById('download-leave-records').addEventListener('click', downloadLeaveRecordsPDF);
+</script>

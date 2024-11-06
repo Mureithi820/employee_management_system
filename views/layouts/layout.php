@@ -21,27 +21,25 @@
                     <ul class="nav">
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <?php if ($_SESSION['role'] === 'admin'): ?>
-                                <!-- Link to Admin Profile Page -->
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="/employee_management_system/index.php?page=profile">Admin Profile</a>
+                                    <a class="nav-link <?php echo ($page == 'profile') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=profile">Admin Profile</a>
                                 </li>
                             <?php elseif ($_SESSION['role'] === 'employee'): ?>
-                                <!-- Link to Employee Profile Page -->
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" href="/employee_management_system/index.php?page=profile">Employee Profile</a>
+                                    <a class="nav-link <?php echo ($page == 'profile') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=profile">Employee Profile</a>
                                 </li>
                             <?php endif; ?>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="/employee_management_system/views/user/logout.php">Logout</a>
-                            </li>
-                        <?php else: ?>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="/employee_management_system/views/user/login.php">Login</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="/employee_management_system/views/user/register.php">Register</a>
-                            </li>
-                        <?php endif; ?>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/employee_management_system/views/user/logout.php">Logout</a>
+                                </li>
+                            <?php else: ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php echo ($page == 'login') ? 'active' : ''; ?>" href="/employee_management_system/views/user/login.php">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link <?php echo ($page == 'register') ? 'active' : ''; ?>" href="/employee_management_system/views/user/register.php">Register</a>
+                                </li>
+                            <?php endif; ?>
                     </ul>
                 </nav>
             </div>
@@ -55,23 +53,38 @@
                 <ul class="nav flex-column">
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="/employee_management_system/index.php?page=dashboard">Home</a>
+                            <a class="nav-link <?php echo ($page == 'dashboard') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=dashboard">Home</a>
                         </li>
                         <?php if ($_SESSION['role'] === 'admin'): ?>
-                            <li class="nav-item"><a class="nav-link" href="/employee_management_system/index.php?page=admin_time_tracking">Admin Time Tracking</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/employee_management_system/index.php?page=admin_payroll">Admin Payroll</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/employee_management_system/index.php?page=admin_leave_management">Admin Leave Management</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/employee_management_system/index.php?page=employee_management">Employee Management</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/employee_management_system/index.php?page=user_management">User Management</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo ($page == 'admin_time_tracking') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=admin_time_tracking">Admin Time Tracking</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo ($page == 'admin_payroll') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=admin_payroll">Admin Payroll</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo ($page == 'admin_leave_management') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=admin_leave_management">Admin Leave Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo ($page == 'employee_management') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=employee_management">Employee Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo ($page == 'user_management') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=user_management">User Management</a>
+                            </li>
                         <?php else: ?>
-                            <li class="nav-item"><a class="nav-link" href="/employee_management_system/index.php?page=time_tracking">Time Tracking</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/employee_management_system/index.php?page=payroll">Payroll</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/employee_management_system/index.php?page=leave_management">Leave Management</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo ($page == 'time_tracking') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=time_tracking">Time Tracking</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo ($page == 'payroll') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=payroll">Payroll</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link <?php echo ($page == 'leave_management') ? 'active' : ''; ?>" href="/employee_management_system/index.php?page=leave_management">Leave Management</a>
+                            </li>
                         <?php endif; ?>
                     <?php endif; ?>
                 </ul>
             </aside>
-
 
             <!-- Main Content Section -->
             <main class="col-md-9 col-lg-10 main-content py-4">
