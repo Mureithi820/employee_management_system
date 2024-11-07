@@ -59,50 +59,57 @@ foreach ($leave_requests as $request) {
 ?>
 
 <div class="container">
-    <h1>Your Leave Requests</h1>
-    <a href="request_leave.php?page=request_leave" class="btn btn-secondary mb-3">Request Leave</a>
-    <button class="btn btn-danger mb-3" id="download-leave-records">Download Leave Requests as PDF</button>
-    
-    <table id="leaveTable" class="table table-striped">
-        <thead>
-            <tr>
-                <th>Leave Type</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
-                <th>Used Days</th>
-                <th>Remaining Days</th>
-                <th>Created At</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (count($leave_requests) > 0): ?>
-                <?php foreach ($leave_requests as $request): ?>
-                <tr data-leave-id="<?= htmlspecialchars($request['id']) ?>">
-                    <td><?= htmlspecialchars($request['leave_type_name']) ?></td>
-                    <td><?= htmlspecialchars($request['start_date']) ?></td>
-                    <td><?= htmlspecialchars($request['end_date']) ?></td>
-                    <td><?= htmlspecialchars($request['status']) ?></td>
-                    <td><?= htmlspecialchars($request['used_days']) ?></td>
-                    <td>
-                        <?php 
-                        // Calculate remaining days
-                        $remainingDays = isset($entitled_days[$request['leave_type_id']]) ? 
-                            $entitled_days[$request['leave_type_id']] - $request['used_days'] : 0;
-                        echo htmlspecialchars($remainingDays);
-                        ?>
-                    </td>
-                    <td><?= htmlspecialchars($request['created_at']) ?></td>
-                </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+    <h1 class="text-center">Your Leave Requests</h1>
+
+    <!-- Responsive button group for mobile screens -->
+    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
+        <a href="request_leave.php?page=request_leave" class="btn btn-secondary mb-2 mb-md-0">Request Leave</a>
+        <button class="btn btn-danger" id="download-leave-records">Download Leave Requests as PDF</button>
+    </div>
+
+    <!-- Responsive table container for smaller screens -->
+    <div class="table-responsive">
+        <table id="leaveTable" class="table table-striped">
+            <thead>
                 <tr>
-                    <td colspan="7" class="text-center">No leave requests found.</td>
+                    <th>Leave Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Used Days</th>
+                    <th>Remaining Days</th>
+                    <th>Created At</th>
                 </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php if (count($leave_requests) > 0): ?>
+                    <?php foreach ($leave_requests as $request): ?>
+                    <tr data-leave-id="<?= htmlspecialchars($request['id']) ?>">
+                        <td><?= htmlspecialchars($request['leave_type_name']) ?></td>
+                        <td><?= htmlspecialchars($request['start_date']) ?></td>
+                        <td><?= htmlspecialchars($request['end_date']) ?></td>
+                        <td><?= htmlspecialchars($request['status']) ?></td>
+                        <td><?= htmlspecialchars($request['used_days']) ?></td>
+                        <td>
+                            <?php 
+                            $remainingDays = isset($entitled_days[$request['leave_type_id']]) ? 
+                                $entitled_days[$request['leave_type_id']] - $request['used_days'] : 0;
+                            echo htmlspecialchars($remainingDays);
+                            ?>
+                        </td>
+                        <td><?= htmlspecialchars($request['created_at']) ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <tr>
+                        <td colspan="7" class="text-center">No leave requests found.</td>
+                    </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>

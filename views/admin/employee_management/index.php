@@ -15,47 +15,49 @@ $stmt->execute();
 $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<div class="container mt-10 mb-10">
-    <h1>Employee Management</h1>
+<div class="container mt-4 mb-4">
+    <h1 class="text-center">Employee Management</h1>
 
-    <!-- Wrap the buttons in a div with d-flex to align them horizontally -->
-    <div class="d-flex mb-3">
-        <a href="create.php?page=employee_management_create" class="btn btn-success mr-2">Create New Employee</a>
+    <!-- Responsive button group -->
+    <div class="d-flex flex-column flex-sm-row justify-content-center mb-3">
+        <a href="create.php?page=employee_management_create" class="btn btn-success mb-2 mb-sm-0 mr-sm-2">Create New Employee</a>
         <button class="btn btn-danger" id="download-employee-records">Download Employee Records</button>
     </div>
 
-    <table class="table table-striped mt-3" id="employee-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Full Name</th>
-                <th>Position</th>
-                <th>Department</th>
-                <th>Phone</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (empty($employees)): ?>
+    <!-- Responsive table -->
+    <div class="table-responsive">
+        <table class="table table-striped mt-3" id="employee-table">
+            <thead class="thead-dark">
                 <tr>
-                    <td colspan="6" class="text-center">No employees found.</td>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>Position</th>
+                    <th>Department</th>
+                    <th>Phone</th>
+                    <th>Email</th>
                 </tr>
-            <?php else: ?>
-                <?php foreach ($employees as $employee): ?>
-                <tr>
-                    <td><?= htmlspecialchars($employee['id']) ?></td>
-                    <td><?= htmlspecialchars($employee['full_name']) ?></td>
-                    <td><?= htmlspecialchars($employee['position']) ?></td>
-                    <td><?= htmlspecialchars($employee['department']) ?></td>
-                    <td><?= htmlspecialchars($employee['phone']) ?></td>
-                    <td><?= htmlspecialchars($employee['email']) ?></td>
-                </tr>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php if (empty($employees)): ?>
+                    <tr>
+                        <td colspan="6" class="text-center">No employees found.</td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($employees as $employee): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($employee['id']) ?></td>
+                        <td><?= htmlspecialchars($employee['full_name']) ?></td>
+                        <td><?= htmlspecialchars($employee['position']) ?></td>
+                        <td><?= htmlspecialchars($employee['department']) ?></td>
+                        <td><?= htmlspecialchars($employee['phone']) ?></td>
+                        <td><?= htmlspecialchars($employee['email']) ?></td>
+                    </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>

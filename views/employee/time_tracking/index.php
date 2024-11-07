@@ -57,47 +57,50 @@ $attendanceRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container">
-    <h1>Attendance</h1>
-    <form method="POST">
-        <input type="hidden" name="action" id="action"> <!-- Hidden input for action -->
+    <h1 class="text-center mt-4">Attendance</h1>
+    <form method="POST" class="text-center mb-4">
+        <input type="hidden" name="action" id="action">
         <input type="hidden" name="latitude" id="latitude">
         <input type="hidden" name="longitude" id="longitude">
-        <div class="form-group">
-            <button type="button" class="btn btn-success" onclick="checkIn()">Check In</button>
-            <button type="button" class="btn btn-danger" onclick="checkOut()">Check Out</button>
+        
+        <div class="form-group d-flex justify-content-center">
+            <button type="button" class="btn btn-success m-1" onclick="checkIn()">Check In</button>
+            <button type="button" class="btn btn-danger m-1" onclick="checkOut()">Check Out</button>
         </div>
     </form>
 
-    <h2>Attendance Records</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Check In Time</th>
-                <th>Check In Latitude</th>
-                <th>Check In Longitude</th>
-                <th>Check Out Time</th>
-                <th>Check Out Latitude</th>
-                <th>Check Out Longitude</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($attendanceRecords as $record): ?>
+    <h2 class="text-center mb-4">Attendance Records</h2>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td><?php echo htmlspecialchars($record['check_in_time']); ?></td>
-                    <td><?php echo htmlspecialchars($record['check_in_latitude']); ?></td>
-                    <td><?php echo htmlspecialchars($record['check_in_longitude']); ?></td>
-                    <td><?php echo htmlspecialchars($record['check_out_time']); ?></td>
-                    <td><?php echo htmlspecialchars($record['check_out_latitude']); ?></td>
-                    <td><?php echo htmlspecialchars($record['check_out_longitude']); ?></td>
+                    <th>Check In Time</th>
+                    <th>Check In Latitude</th>
+                    <th>Check In Longitude</th>
+                    <th>Check Out Time</th>
+                    <th>Check Out Latitude</th>
+                    <th>Check Out Longitude</th>
                 </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <?php foreach ($attendanceRecords as $record): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($record['check_in_time']); ?></td>
+                        <td><?php echo htmlspecialchars($record['check_in_latitude']); ?></td>
+                        <td><?php echo htmlspecialchars($record['check_in_longitude']); ?></td>
+                        <td><?php echo htmlspecialchars($record['check_out_time']); ?></td>
+                        <td><?php echo htmlspecialchars($record['check_out_latitude']); ?></td>
+                        <td><?php echo htmlspecialchars($record['check_out_longitude']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
 function checkIn() {
-    document.getElementById('action').value = 'check_in'; // Set action to check_in
+    document.getElementById('action').value = 'check_in';
     navigator.geolocation.getCurrentPosition(function(position) {
         document.getElementById('latitude').value = position.coords.latitude;
         document.getElementById('longitude').value = position.coords.longitude;
@@ -106,7 +109,7 @@ function checkIn() {
 }
 
 function checkOut() {
-    document.getElementById('action').value = 'check_out'; // Set action to check_out
+    document.getElementById('action').value = 'check_out';
     navigator.geolocation.getCurrentPosition(function(position) {
         document.getElementById('latitude').value = position.coords.latitude;
         document.getElementById('longitude').value = position.coords.longitude;

@@ -17,52 +17,56 @@ $stmt->execute();
 $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
-<div class="container">
-    <h1>Payroll Management</h1>
-    <a href="create.php?page=payroll_create" class="btn btn-success mb-3">Add Payroll Record</a>
-    <button class="btn btn-danger mb-3" id="download-payroll-records-admin">Download All Payroll Records</button>
+<div class="container mt-10 mb-10">
+    <h1 class="text-center">Payroll Management</h1>
+    <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
+        <a href="create.php?page=payroll_create" class="btn btn-success mb-2 mb-md-0 btn-block btn-md">Add Payroll Record</a>
+        <button class="btn btn-danger btn-block btn-md" id="download-payroll-records-admin">Download All Payroll Records</button>
+    </div>
 
-    <table class="table table-striped" id="payroll-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Employee Name</th>
-                <th>Basic Salary</th>
-                <th>Gross Salary</th>
-                <th>PAYE Tax</th>
-                <th>NHIF</th>
-                <th>NSSF</th>
-                <th>Deductions</th>
-                <th>Bonuses</th>
-                <th>Net Salary</th>
-                <th>Created At</th>
-                <th>View Payslip</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($payroll_records as $record): ?>
-            <tr>
-                <td><?= htmlspecialchars($record['id']) ?></td>
-                <td><?= htmlspecialchars($record['full_name']) ?></td>
-                <td><?= htmlspecialchars($record['basic_salary']) ?></td>
-                <td><?= htmlspecialchars($record['gross_salary']) ?></td>
-                <td><?= htmlspecialchars($record['paye_tax']) ?></td>
-                <td><?= htmlspecialchars($record['nhif']) ?></td>
-                <td><?= htmlspecialchars($record['nssf']) ?></td>
-                <td><?= htmlspecialchars($record['deductions']) ?></td>
-                <td><?= htmlspecialchars($record['bonuses']) ?></td>
-                <td><?= htmlspecialchars($record['net_salary']) ?></td>
-                <td><?= htmlspecialchars($record['created_at']) ?></td>
-                <td><button class="btn btn-info btn-sm view-payslip" data-record='<?= json_encode($record) ?>'>View Payslip</button></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered" id="payroll-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Employee Name</th>
+                    <th>Basic Salary</th>
+                    <th>Gross Salary</th>
+                    <th>PAYE Tax</th>
+                    <th>NHIF</th>
+                    <th>NSSF</th>
+                    <th>Deductions</th>
+                    <th>Bonuses</th>
+                    <th>Net Salary</th>
+                    <th>Created At</th>
+                    <th>View Payslip</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($payroll_records as $record): ?>
+                <tr>
+                    <td><?= htmlspecialchars($record['id']) ?></td>
+                    <td><?= htmlspecialchars($record['full_name']) ?></td>
+                    <td><?= htmlspecialchars($record['basic_salary']) ?></td>
+                    <td><?= htmlspecialchars($record['gross_salary']) ?></td>
+                    <td><?= htmlspecialchars($record['paye_tax']) ?></td>
+                    <td><?= htmlspecialchars($record['nhif']) ?></td>
+                    <td><?= htmlspecialchars($record['nssf']) ?></td>
+                    <td><?= htmlspecialchars($record['deductions']) ?></td>
+                    <td><?= htmlspecialchars($record['bonuses']) ?></td>
+                    <td><?= htmlspecialchars($record['net_salary']) ?></td>
+                    <td><?= htmlspecialchars($record['created_at']) ?></td>
+                    <td><button class="btn btn-info btn-sm view-payslip" data-record='<?= json_encode($record) ?>'>View Payslip</button></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Modal for Payslip -->
 <div class="modal fade" id="payslipModal" tabindex="-1" role="dialog" aria-labelledby="payslipModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="payslipModalLabel">Payslip</h5>
@@ -72,12 +76,13 @@ $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="modal-body">
                 <div id="payslipContent"></div>
-                <button id="download-payslip-csv" class="btn btn-success mt-3">Download Payslip as CSV</button>
-                <button id="download-payslip-pdf" class="btn btn-danger mt-3">Download Payslip as PDF</button>
+                <button id="download-payslip-csv" class="btn btn-success btn-block mt-3">Download Payslip as CSV</button>
+                <button id="download-payslip-pdf" class="btn btn-danger btn-block mt-3">Download Payslip as PDF</button>
             </div>
         </div>
     </div>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>

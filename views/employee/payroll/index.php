@@ -30,47 +30,51 @@ $stmt->execute([$userId]);
 $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<div class="container">
-    <h1>My Payroll Records</h1>
-    <button class="btn btn-danger mb-3" id="download-payroll-records">Download Payroll Records</button>
+<div class="container my-5">
+    <h1 class="text-center">My Payroll Records</h1>
+    <div class="d-flex justify-content-center justify-content-md-start">
+        <button class="btn btn-danger mb-3" id="download-payroll-records">Download Payroll Records</button>
+    </div>
 
-    <table class="table table-striped" id="payroll-table">
-        <thead>
-            <tr>
-                <th>Employee Name</th>
-                <th>Gross Salary</th>
-                <th>PAYE Tax</th>
-                <th>NHIF</th>
-                <th>NSSF</th>
-                <th>Deductions</th>
-                <th>Bonuses</th>
-                <th>Net Salary</th>
-                <th>Date</th>
-                <th>View Payslip</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($payroll_records as $record): ?>
-            <tr>
-                <td><?= htmlspecialchars($record['full_name'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($record['gross_salary'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($record['paye_tax'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($record['nhif'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($record['nssf'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($record['deductions'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($record['bonuses'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($record['net_salary'] ?? 'N/A') ?></td>
-                <td><?= htmlspecialchars($record['created_at'] ?? 'N/A') ?></td>
-                <td><button class="btn btn-info btn-sm view-payslip" data-record='<?= json_encode($record) ?>'>View Payslip</button></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped" id="payroll-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Gross Salary</th>
+                    <th>PAYE Tax</th>
+                    <th>NHIF</th>
+                    <th>NSSF</th>
+                    <th>Deductions</th>
+                    <th>Bonuses</th>
+                    <th>Net Salary</th>
+                    <th>Date</th>
+                    <th>View Payslip</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($payroll_records as $record): ?>
+                <tr>
+                    <td><?= htmlspecialchars($record['full_name'] ?? 'N/A') ?></td>
+                    <td><?= htmlspecialchars($record['gross_salary'] ?? 'N/A') ?></td>
+                    <td><?= htmlspecialchars($record['paye_tax'] ?? 'N/A') ?></td>
+                    <td><?= htmlspecialchars($record['nhif'] ?? 'N/A') ?></td>
+                    <td><?= htmlspecialchars($record['nssf'] ?? 'N/A') ?></td>
+                    <td><?= htmlspecialchars($record['deductions'] ?? 'N/A') ?></td>
+                    <td><?= htmlspecialchars($record['bonuses'] ?? 'N/A') ?></td>
+                    <td><?= htmlspecialchars($record['net_salary'] ?? 'N/A') ?></td>
+                    <td><?= htmlspecialchars($record['created_at'] ?? 'N/A') ?></td>
+                    <td><button class="btn btn-info btn-sm view-payslip" data-record='<?= json_encode($record) ?>'>View Payslip</button></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- Modal for Payslip -->
 <div class="modal fade" id="payslipModal" tabindex="-1" role="dialog" aria-labelledby="payslipModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="payslipModalLabel">Payslip</h5>
@@ -80,8 +84,10 @@ $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="modal-body">
                 <div id="payslipContent"></div>
-                <button id="download-payslip-csv" class="btn btn-success mt-3">Download Payslip as CSV</button>
-                <button id="download-payslip-pdf" class="btn btn-danger mt-3">Download Payslip as PDF</button>
+                <div class="d-flex flex-column flex-md-row gap-2 mt-3">
+                    <button id="download-payslip-csv" class="btn btn-success">Download Payslip as CSV</button>
+                    <button id="download-payslip-pdf" class="btn btn-danger">Download Payslip as PDF</button>
+                </div>
             </div>
         </div>
     </div>
