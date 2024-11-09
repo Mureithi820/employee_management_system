@@ -64,8 +64,12 @@ $attendanceRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <input type="hidden" name="longitude" id="longitude">
         
         <div class="form-group d-flex justify-content-center">
-            <button type="button" class="btn btn-success m-1" onclick="checkIn()">Check In</button>
-            <button type="button" class="btn btn-danger m-1" onclick="checkOut()">Check Out</button>
+            <button type="button" class="btn btn-success m-1" onclick="checkIn()">
+                <i class="fas fa-check"></i> Check In
+            </button>
+            <button type="button" class="btn btn-danger m-1" onclick="checkOut()">
+                <i class="fas fa-sign-out-alt"></i> Check Out
+            </button>
         </div>
     </form>
 
@@ -97,7 +101,7 @@ $attendanceRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </table>
     </div>
 </div>
-
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script>
 function checkIn() {
     document.getElementById('action').value = 'check_in';

@@ -20,8 +20,14 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Responsive button group -->
     <div class="d-flex flex-column flex-sm-row justify-content-center mb-3">
-        <a href="create.php?page=employee_management_create" class="btn btn-success mb-2 mb-sm-0 mr-sm-2">Create New Employee</a>
-        <button class="btn btn-danger" id="download-employee-records">Download Employee Records</button>
+        
+        <a href="create.php?page=employee_management_create" class="btn btn-success mb-2 mb-sm-0 mr-sm-2">
+            <i class="fas fa-user-plus"></i> Create New Employee
+        </a>
+        
+        <button class="btn btn-danger" id="download-employee-records">
+            <i class="fas fa-download"></i> Download Employee Records
+        </button>
     </div>
 
     <!-- Responsive table -->
@@ -58,7 +64,7 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </table>
     </div>
 </div>
-
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 

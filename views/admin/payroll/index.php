@@ -17,12 +17,20 @@ $stmt->execute();
 $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
+
 <div class="container mt-10 mb-10">
     <h1 class="text-center">Payroll Management</h1>
     <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
-        <a href="create.php?page=payroll_create" class="btn btn-success mb-2 mb-md-0 btn-block btn-md">Add Payroll Record</a>
-        <button class="btn btn-danger btn-block btn-md" id="download-payroll-records-admin">Download All Payroll Records</button>
+        <!-- Add Payroll Record Button -->
+        <a href="create.php?page=payroll_create" class="btn btn-success mb-2 mb-md-0 btn-md w-100">
+            <i class="fas fa-plus-circle"></i> Add Payroll Record
+        </a>
+        <!-- Download Payroll Records Button -->
+        <button class="btn btn-danger btn-md w-100" id="download-payroll-records-admin">
+            <i class="fas fa-download"></i> Download All Payroll Records
+        </button>
     </div>
+
 
     <div class="table-responsive">
         <table class="table table-striped table-bordered" id="payroll-table">
@@ -56,7 +64,11 @@ $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= htmlspecialchars($record['bonuses']) ?></td>
                     <td><?= htmlspecialchars($record['net_salary']) ?></td>
                     <td><?= htmlspecialchars($record['created_at']) ?></td>
-                    <td><button class="btn btn-info btn-sm view-payslip" data-record='<?= json_encode($record) ?>'>View Payslip</button></td>
+                    <td>
+                        <button class="btn btn-info btn-sm view-payslip" data-record='<?= json_encode($record) ?>'>
+                            <i class="fas fa-eye"></i> View Payslip
+                        </button>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -76,14 +88,21 @@ $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="modal-body">
                 <div id="payslipContent"></div>
-                <button id="download-payslip-csv" class="btn btn-success btn-block mt-3">Download Payslip as CSV</button>
-                <button id="download-payslip-pdf" class="btn btn-danger btn-block mt-3">Download Payslip as PDF</button>
+                <!-- Download Payslip as CSV Button with icon -->
+                <button id="download-payslip-csv" class="btn btn-success btn-block mt-3">
+                    <i class="fas fa-file-csv"></i> Download Payslip as CSV
+                </button>
+                <!-- Download Payslip as PDF Button with icon -->
+                <button id="download-payslip-pdf" class="btn btn-danger btn-block mt-3">
+                    <i class="fas fa-file-pdf"></i> Download Payslip as PDF
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-
+<!-- Font Awesome CDN -->
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 <script>

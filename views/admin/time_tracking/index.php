@@ -21,37 +21,50 @@ $stmt = $pdo->prepare("
 $stmt->execute();
 $attendanceRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-<div class="container mt-10 mb-10">
-    <h1>Attendance Records</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Records</title>
+    <!-- Include Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-10 mb-10">
+        <h1>Attendance Records</h1>
 
-    <!-- Wrap the buttons in a div with d-flex to align them horizontally -->
-    <div class="d-flex mb-3">
-        <button class="btn btn-danger" id="download-attendance-records">Download Attendance Records</button>
+        <!-- Wrap the buttons in a div with d-flex to align them horizontally -->
+        <div class="d-flex mb-3">
+            <!-- Added Font Awesome icon to the button -->
+            <button class="btn btn-danger" id="download-attendance-records">
+                <i class="fas fa-download"></i> Download Attendance Records
+            </button>
+        </div>
+
+        <table class="table table-striped mt-3" id="attendance-table">
+            <thead>
+                <tr>
+                    <th>Employee Name</th>
+                    <th>Check-in Time</th>
+                    <th>Check-out Time</th>
+                    <th>Check-in Location</th>
+                    <th>Check-out Location</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($attendanceRecords as $record): ?>
+                <tr>
+                    <td><?= htmlspecialchars($record['full_name']) ?></td>
+                    <td><?= htmlspecialchars($record['check_in_time']) ?></td>
+                    <td><?= htmlspecialchars($record['check_out_time']) ?></td>
+                    <td><?= htmlspecialchars($record['check_in_latitude'] . ', ' . $record['check_in_longitude']) ?></td>
+                    <td><?= htmlspecialchars($record['check_out_latitude'] . ', ' . $record['check_out_longitude']) ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </div>
-
-    <table class="table table-striped mt-3" id="attendance-table">
-        <thead>
-            <tr>
-                <th>Employee Name</th>
-                <th>Check-in Time</th>
-                <th>Check-out Time</th>
-                <th>Check-in Location</th>
-                <th>Check-out Location</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($attendanceRecords as $record): ?>
-            <tr>
-                <td><?= htmlspecialchars($record['full_name']) ?></td>
-                <td><?= htmlspecialchars($record['check_in_time']) ?></td>
-                <td><?= htmlspecialchars($record['check_out_time']) ?></td>
-                <td><?= htmlspecialchars($record['check_in_latitude'] . ', ' . $record['check_in_longitude']) ?></td>
-                <td><?= htmlspecialchars($record['check_out_latitude'] . ', ' . $record['check_out_longitude']) ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>

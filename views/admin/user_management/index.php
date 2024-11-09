@@ -19,7 +19,9 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Wrap the buttons in a div with d-flex to align them horizontally -->
     <div class="d-flex mb-3">
-        <button class="btn btn-danger" id="download-user-records">Download User Records</button>
+        <button class="btn btn-danger" id="download-user-records">
+            <i class="fas fa-download"></i> Download User Records
+        </button>
     </div>
 
     <table class="table table-striped mt-3" id="user-table">
@@ -43,8 +45,12 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= htmlspecialchars($user['username']) ?></td>
                     <td><?= htmlspecialchars($user['role']) ?></td>
                     <td>
-                        <a href="update.php?page=user_management_update&id=<?= $user['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="delete.php?page=user_management_delete&id=<?= $user['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+                        <a href="update.php?page=user_management_update&id=<?= $user['id'] ?>" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="delete.php?page=user_management_delete&id=<?= $user['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -53,6 +59,8 @@ $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </table>
 </div>
 
+
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 

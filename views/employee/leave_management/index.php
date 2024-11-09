@@ -63,8 +63,12 @@ foreach ($leave_requests as $request) {
 
     <!-- Responsive button group for mobile screens -->
     <div class="d-flex flex-column flex-md-row justify-content-between mb-3">
-        <a href="request_leave.php?page=request_leave" class="btn btn-secondary mb-2 mb-md-0">Request Leave</a>
-        <button class="btn btn-danger" id="download-leave-records">Download Leave Requests as PDF</button>
+        <a href="request_leave.php?page=request_leave" class="btn btn-secondary mb-2 mb-md-0">
+            <i class="fas fa-calendar-plus"></i> Request Leave
+        </a>
+        <button class="btn btn-danger" id="download-leave-records">
+            <i class="fas fa-download"></i> Download Leave Requests as PDF
+        </button>
     </div>
 
     <!-- Responsive table container for smaller screens -->
@@ -110,7 +114,7 @@ foreach ($leave_requests as $request) {
     </div>
 </div>
 
-
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 <script>

@@ -33,7 +33,9 @@ $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="container my-5">
     <h1 class="text-center">My Payroll Records</h1>
     <div class="d-flex justify-content-center justify-content-md-start">
-        <button class="btn btn-danger mb-3" id="download-payroll-records">Download Payroll Records</button>
+        <button class="btn btn-danger mb-3" id="download-payroll-records">
+            <i class="fas fa-download"></i> Download Payroll Records
+        </button>
     </div>
 
     <div class="table-responsive">
@@ -64,7 +66,9 @@ $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= htmlspecialchars($record['bonuses'] ?? 'N/A') ?></td>
                     <td><?= htmlspecialchars($record['net_salary'] ?? 'N/A') ?></td>
                     <td><?= htmlspecialchars($record['created_at'] ?? 'N/A') ?></td>
-                    <td><button class="btn btn-info btn-sm view-payslip" data-record='<?= json_encode($record) ?>'>View Payslip</button></td>
+                    <td><button class="btn btn-info btn-sm view-payslip" data-record='<?= json_encode($record) ?>'>
+                        <i class="fas fa-eye"></i> View Payslip
+                    </button></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -85,14 +89,19 @@ $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="modal-body">
                 <div id="payslipContent"></div>
                 <div class="d-flex flex-column flex-md-row gap-2 mt-3">
-                    <button id="download-payslip-csv" class="btn btn-success">Download Payslip as CSV</button>
-                    <button id="download-payslip-pdf" class="btn btn-danger">Download Payslip as PDF</button>
+                    <button id="download-payslip-csv" class="btn btn-success">
+                        <i class="fas fa-file-csv"></i> Download Payslip as CSV
+                    </button>
+                    <button id="download-payslip-pdf" class="btn btn-danger">
+                        <i class="fas fa-file-pdf"></i> Download Payslip as PDF
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
 <script>
