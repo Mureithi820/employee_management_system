@@ -14,7 +14,7 @@
 </head>
 <body>
     <!-- Header Section -->
-    <header class="bg-dark text-white py-3">
+    <header class="bg-dark text-white py-2">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
                 <h1 class="h3 mb-0">Employee Management System</h1>

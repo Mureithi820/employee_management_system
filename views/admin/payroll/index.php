@@ -220,15 +220,55 @@ function downloadPayslipCSV(record) {
 function downloadPayslipPDF(record) {
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF();
-
-    pdf.setFontSize(16);
+    
+    // Set document title
+    pdf.setFontSize(18);
     pdf.text('Payslip', 10, 10);
+    
+    // Set font for body text
+    pdf.setFontSize(12);
+    
+    // Add Employee Information
     pdf.text(`Employee ID: ${record.id}`, 10, 20);
     pdf.text(`Employee Name: ${record.full_name}`, 10, 30);
     pdf.text(`Gross Salary: ${record.gross_salary}`, 10, 40);
     pdf.text(`Net Salary: ${record.net_salary}`, 10, 50);
     pdf.text(`Date: ${record.created_at}`, 10, 60);
-
+    
+    // Add a separator line
+    pdf.setLineWidth(0.5);
+    pdf.line(10, 70, 200, 70);
+    
+    // Add Payroll Details in Table Format
+    const tableColumn = ["Description", "Amount"];
+    const tableRows = [
+        ["Gross Salary", record.gross_salary],
+        ["PAYE Tax", record.paye_tax],
+        ["NHIF", record.nhif],
+        ["NSSF", record.nssf],
+        ["Deductions", record.deductions],
+        ["Bonuses", record.bonuses],
+        ["Net Salary", record.net_salary],
+    ];
+    
+    // Add table to PDF
+    pdf.autoTable({
+        startY: 80,
+        head: [tableColumn],
+        body: tableRows,
+        theme: 'grid',
+        headStyles: {
+            fillColor: [45, 85, 180],
+            textColor: [255, 255, 255],
+            fontSize: 10,
+        },
+        bodyStyles: {
+            fontSize: 10,
+            cellPadding: 3,
+        }
+    });
+    
+    // Save the PDF
     pdf.save('payslip_admin.pdf');
 }
 
