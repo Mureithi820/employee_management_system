@@ -41,6 +41,7 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th>Department</th>
                     <th>Phone</th>
                     <th>Email</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -57,6 +58,16 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <td><?= htmlspecialchars($employee['department']) ?></td>
                         <td><?= htmlspecialchars($employee['phone']) ?></td>
                         <td><?= htmlspecialchars($employee['email']) ?></td>
+                        <td>
+                            <!-- Edit button -->
+                            <a href="update.php?page=employee_management_update&id=<?= $employee['id'] ?>" class="btn btn-warning btn-sm">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                            <!-- Delete button with confirmation -->
+                            <a href="delete.php?page=employee_management_delete&id=<?= $employee['id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this employee?');">
+                                <i class="fas fa-trash-alt"></i> Delete
+                            </a>
+                        </td>
                     </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

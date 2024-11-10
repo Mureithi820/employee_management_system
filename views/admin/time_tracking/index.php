@@ -20,6 +20,28 @@ $stmt = $pdo->prepare("
 ");
 $stmt->execute();
 $attendanceRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+//Delete Payroll
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ensure an ID is provided
+    if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+        $attendanceId = $_POST['id'];
+
+        // Prepare the delete statement
+        $stmt = $pdo->prepare("DELETE FROM attendance WHERE id = :id");
+        $stmt->bindParam(':id', $attendanceId, PDO::PARAM_INT);
+
+        // Execute the query
+        if ($stmt->execute()) {
+            echo 'Record deleted successfully';
+        } else {
+            echo 'Failed to delete the record';
+        }
+    } else {
+        echo 'Invalid request';
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,6 +72,7 @@ $attendanceRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th>Check-out Time</th>
                     <th>Check-in Location</th>
                     <th>Check-out Location</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,6 +83,11 @@ $attendanceRecords = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><?= htmlspecialchars($record['check_out_time']) ?></td>
                     <td><?= htmlspecialchars($record['check_in_latitude'] . ', ' . $record['check_in_longitude']) ?></td>
                     <td><?= htmlspecialchars($record['check_out_latitude'] . ', ' . $record['check_out_longitude']) ?></td>
+                    <td>
+                        <button class="btn btn-danger btn-sm delete-attendance" data-id="<?= htmlspecialchars($record['id']) ?>">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -99,4 +127,28 @@ function downloadAttendanceRecords() {
 
 // Event listener for the download button
 document.getElementById('download-attendance-records').addEventListener('click', downloadAttendanceRecords);
+
+document.querySelectorAll('.delete-attendance').forEach(button => {
+    button.addEventListener('click', function() {
+        const recordId = this.getAttribute('data-id');
+        
+        if (confirm('Are you sure you want to delete this attendance record?')) {
+            // AJAX request to delete payroll record
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'delete_attendance.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // If the delete is successful, remove the row from the table
+                    const row = button.closest('tr');
+                    row.parentNode.removeChild(row);
+                    alert('Attendance record deleted successfully.');
+                } else {
+                    alert('Failed to delete Attendance record. Please try again.');
+                }
+            };
+            xhr.send('id=' + recordId); // Send the record ID to delete
+        }
+    });
+})
 </script>

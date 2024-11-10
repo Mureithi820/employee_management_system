@@ -68,7 +68,7 @@ footer {
   background-color: #333;
   color: #fff;
   text-align: center;
-  padding: 10px;
+  padding: 8px 0; /* Reduced padding for smaller footer */
   position: fixed;
   width: 100%;
   bottom: 0;

@@ -11,6 +11,28 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     die("Access denied. You do not have permission to access this page.");
 }
 
+//Delete Payroll
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Ensure an ID is provided
+    if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+        $payrollId = $_POST['id'];
+
+        // Prepare the delete statement
+        $stmt = $pdo->prepare("DELETE FROM payroll WHERE id = :id");
+        $stmt->bindParam(':id', $payrollId, PDO::PARAM_INT);
+
+        // Execute the query
+        if ($stmt->execute()) {
+            echo 'Record deleted successfully';
+        } else {
+            echo 'Failed to delete the record';
+        }
+    } else {
+        echo 'Invalid request';
+    }
+}
+
 // Fetch payroll records
 $stmt = $pdo->prepare("SELECT p.*, e.full_name FROM payroll p JOIN employees e ON p.employee_id = e.id");
 $stmt->execute();
@@ -48,6 +70,7 @@ $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th>Net Salary</th>
                     <th>Created At</th>
                     <th>View Payslip</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -69,6 +92,12 @@ $payroll_records = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <i class="fas fa-eye"></i> View Payslip
                         </button>
                     </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm delete-payroll" data-id="<?= htmlspecialchars($record['id']) ?>">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </td>
+
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -131,6 +160,29 @@ function downloadPayrollRecordsAdmin() {
 
     pdf.save('payroll_records_admin.pdf');
 }
+document.querySelectorAll('.delete-payroll').forEach(button => {
+    button.addEventListener('click', function() {
+        const recordId = this.getAttribute('data-id');
+        
+        if (confirm('Are you sure you want to delete this payroll record?')) {
+            // AJAX request to delete payroll record
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'delete_payroll.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // If the delete is successful, remove the row from the table
+                    const row = button.closest('tr');
+                    row.parentNode.removeChild(row);
+                    alert('Payroll record deleted successfully.');
+                } else {
+                    alert('Failed to delete payroll record. Please try again.');
+                }
+            };
+            xhr.send('id=' + recordId); // Send the record ID to delete
+        }
+    });
+});
 
 function downloadCSVAdmin() {
     const table = document.getElementById('payroll-table');
