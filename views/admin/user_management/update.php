@@ -10,6 +10,10 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
     die("Access denied. You do not have permission to access this page.");
 }
 
+// Initialize variables for messages
+$successMessage = '';
+$errorMessage = '';
+
 // Check if the user ID is provided
 if (isset($_GET['id'])) {
     $userId = $_GET['id'];
@@ -26,11 +30,11 @@ if (isset($_GET['id'])) {
 
         // Update the user in the database
         $stmt = $pdo->prepare("UPDATE users SET username = ?, role = ? WHERE id = ?");
-        $stmt->execute([$username, $role, $userId]);
-
-        // Redirect to the user management page
-        header("Location: user_management.php");
-        exit;
+        if ($stmt->execute([$username, $role, $userId])) {
+            $successMessage = "User updated successfully!";
+        } else {
+            $errorMessage = "Error updating user information.";
+        }
     }
 } else {
     die("Error: No user ID provided.");
@@ -39,6 +43,14 @@ if (isset($_GET['id'])) {
 
 <div class="container">
     <h1>Edit User</h1>
+
+    <!-- Success or error message -->
+    <?php if ($successMessage): ?>
+        <div class="alert alert-success"><?= htmlspecialchars($successMessage) ?></div>
+    <?php elseif ($errorMessage): ?>
+        <div class="alert alert-danger"><?= htmlspecialchars($errorMessage) ?></div>
+    <?php endif; ?>
+
     <form method="post">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
