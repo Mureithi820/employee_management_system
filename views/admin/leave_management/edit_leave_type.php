@@ -38,6 +38,9 @@ if (!$leave_type) {
     die("Leave type not found.");
 }
 
+$successMessage = '';
+$errorMessage = '';
+
 // Handle form submission for update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
@@ -46,16 +49,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Update the leave type
     $stmt = $pdo->prepare("UPDATE leave_types SET name = ?, description = ?, entitled_days = ? WHERE id = ?");
-    $stmt->execute([$name, $description, $entitledDays, $id]);
-
-    // Redirect after successful update
-    header('Location: index.php?page=admin_leave_management');
-    exit;
+    if ($stmt->execute([$name, $description, $entitledDays, $id])) {
+        // Show success message after successful update
+        $successMessage = "Leave type updated successfully!";
+    } else {
+        // Show error message if the update failed
+        $errorMessage = "Error updating leave type.";
+    }
 }
 ?>
 
 <div class="container mt-5 mb-5">
     <h1>Edit Leave Type</h1>
+
+    <!-- Success or error message -->
+    <?php if ($successMessage): ?>
+        <div class="alert alert-success"><?= htmlspecialchars($successMessage) ?></div>
+    <?php elseif ($errorMessage): ?>
+        <div class="alert alert-danger"><?= htmlspecialchars($errorMessage) ?></div>
+    <?php endif; ?>
+
+    <!-- Form -->
     <form method="POST" action="edit_leave_type.php?page=leave_management_edit&id=<?= $leave_type['id'] ?>">
         <div class="form-group">
             <label for="name">Leave Type Name</label>
