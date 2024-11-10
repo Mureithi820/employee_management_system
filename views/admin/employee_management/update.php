@@ -24,6 +24,9 @@ if (!$employee) {
     die("Employee not found.");
 }
 
+$successMessage = '';
+$errorMessage = '';
+
 // Handle form submission for update
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fullName = $_POST['full_name'];
@@ -33,15 +36,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
 
     $stmt = $pdo->prepare("UPDATE employees SET full_name = ?, position = ?, department = ?, phone = ?, email = ? WHERE id = ?");
-    $stmt->execute([$fullName, $position, $department, $phone, $email, $id]);
-
-    // Redirect after successful update
-    header('Location: index.php?page=employee_management');
-    exit;
+    if ($stmt->execute([$fullName, $position, $department, $phone, $email, $id])) {
+        $successMessage = "Employee record updated successfully!";
+    } else {
+        $errorMessage = "Error updating employee record.";
+    }
 }
 ?>
+
 <div class="container mt-5 mb-5">
     <h1>Edit Employee Record</h1>
+
+    <!-- Success or error message -->
+    <?php if ($successMessage): ?>
+        <div class="alert alert-success"><?= htmlspecialchars($successMessage) ?></div>
+    <?php elseif ($errorMessage): ?>
+        <div class="alert alert-danger"><?= htmlspecialchars($errorMessage) ?></div>
+    <?php endif; ?>
+
+    <!-- Form -->
     <form method="POST" action="update.php?page=employee_management_update&id=<?= $employee['id'] ?>">
         <div class="form-group">
             <label for="full_name">Full Name</label>
