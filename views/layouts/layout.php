@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Management System</title>
+    <title>Payroll Management System</title>
     <!-- Bootstrap CSS CDN -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css"> <!-- Link your custom CSS file -->
@@ -17,7 +17,7 @@
     <header class="bg-dark text-white py-2">
         <div class="container">
             <div class="d-flex justify-content-between align-items-center">
-                <h1 class="h3 mb-0">Employee Management System</h1>
+                <h1 class="h3 mb-0">Payroll Management System</h1>
                 <nav>
                     <ul class="nav">
                         <?php if (isset($_SESSION['user_id'])): ?>
@@ -123,7 +123,7 @@
                 if (!empty($content) && file_exists($content)) {
                     include $content;
                 } else {
-                    echo '<h2>Welcome to the Employee Management System</h2>';
+                    echo '<h2>Welcome to the Payroll Management System</h2>';
                     echo '<p>Use the navigation above to access different modules.</p>';
                 }
                 ?>
@@ -133,7 +133,7 @@
 
     <!-- Footer Section -->
     <footer class="bg-dark text-white text-center py-2">
-        <p>&copy; <?php echo date("Y"); ?> Employee Management System. All rights reserved.</p>
+        <p>&copy; <?php echo date("Y"); ?> Payroll Management System. All rights reserved.</p>
     </footer>
 
     <!-- Bootstrap JS and dependencies -->
